@@ -12,5 +12,4 @@ print(df.columns)
 
 df.isnull().sum
 
-
-
+df.dtypes
