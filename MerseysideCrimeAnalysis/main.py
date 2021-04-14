@@ -488,7 +488,7 @@ df2019_Merged = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=Tru
 
 df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
 #print(df2020_Merged.head())
-#print(df2020_Merged.columns)
+print(df2020_Merged.columns)
 #print(df2020_Merged.isnull().sum())
 #print(df2020_Merged.shape) # 2729 records - 18 columns - no null value
 
@@ -498,7 +498,23 @@ df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=Tru
 #print(dfcount2008.shape) # 908 records - 18 columns - no null value
 # success - they match the merge was successful - 2719 vs 2719
 
+###### PYTHON - FUNCTIONS - NUMPY #######################################################################################
+#Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
+np2019 = df2019_Merged.to_numpy()
+#print(np2019)
+#np2019
+np_2019_Total = np.sum(np2019[:,17])
+print(np_2019_Total)
 
+
+np2020 = df2020_Merged.to_numpy()
+#print(np2020)
+np_2020_Total = np.sum(np2020[:,17])
+print(np_2020_Total)
+
+# Creating a list of the crime types
+ms_crimes = list(df2020_Merged)[2:] # List crime types
+print(ms_crimes)
 
 """
 
