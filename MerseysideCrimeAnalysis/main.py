@@ -245,7 +245,7 @@ df2006_sorted = df2006.sort_values(by=['LSOA code','Crime type'],ascending=True)
 #print("June 2020")
 #print(df2006_sorted.head(10))
 
-df2007_sorted = df1907.sort_values(by=['LSOA code','Crime type'],ascending=True)
+df2007_sorted = df2007.sort_values(by=['LSOA code','Crime type'],ascending=True)
 #print("July 2020")
 #print(df2007_sorted.head(10))
 
@@ -467,10 +467,39 @@ for val, row in dfcount2008.iterrows() :
 #print(dfcount1907.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
 #print(df2008_sorted.groupby('LSOA code')['Crime type'].value_counts())
 #print(dfcount2008.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
-
 #Since they match; this means the data has been created successfully
 
 ########################### Join the Datasets together to craete a single dataset ###################   Merge dataframes  ####################################
+
+#I want to create a new dataframe called merged totals 2019 - iwill use the concat method
+
+#merging the tables using concat - ignoring the index as it is of no use to me
+df2019_Merged = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=True)
+#print(df2019_Merged.head())
+#print(df2019_Merged.columns)
+#print(df2019_Merged.isnull().sum())
+#print(df2019_Merged.shape) # 2719 records - 18 columns - no null value
+
+#verify the record count by viewing the individuals dataframes - it is a count of districts reporting crime so no great variations expected
+#print(dfcount1906.shape) # 911 records - 18 columns - no null value
+#print(dfcount1907.shape) # 910 records - 18 columns - no null value
+#print(dfcount1908.shape) # 908 records - 18 columns - no null value
+# success - they match the merge was successful - 2719 vs 2719
+
+df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
+#print(df2020_Merged.head())
+#print(df2020_Merged.columns)
+#print(df2020_Merged.isnull().sum())
+#print(df2020_Merged.shape) # 2729 records - 18 columns - no null value
+
+#verify the record count by viewing the individuals dataframes - it is a count of districts reporting crime so no great variations expected
+#print(dfcount2006.shape) # 911 records - 18 columns - no null value
+#print(dfcount2007.shape) # 910 records - 18 columns - no null value
+#print(dfcount2008.shape) # 908 records - 18 columns - no null value
+# success - they match the merge was successful - 2719 vs 2719
+
+
+
 """
 
 # For June 2019 - see how many different crime types there were
