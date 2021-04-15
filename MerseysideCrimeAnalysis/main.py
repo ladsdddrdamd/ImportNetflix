@@ -508,17 +508,17 @@ np_2019_Total = np.sum(np2019[:,17])
 #print(np_2019_Total)
 
 # Creating a list of the crime types names
-ms_crimes = list(df2020_Merged)[2:] # List crime types
+ms_crimes = list(df2019_Merged)[2:] # List crime types
 #print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
 counter = 2
 
 #Define the 2019 dictionary to hold the values fpr
-dict_2019 = {"names":0}
-
-#Define the 2019 list to hold the values fpr
-list_2019 = []
+dict_2019_total = {"names":0}
+dict_2019_max = {"names":0}
+dict_2019_min = {"names":0}
+dict_2019_std = {"names":0}
 
 for names in ms_crimes :
     if names != 'LSOA name' :
@@ -530,24 +530,73 @@ for names in ms_crimes :
         stdev = np.std(np2019[:,counter])
         #print("Crime Type: " + names + "; Total: " + str(total) + "; Max: " + str(max) + "; Min: " + str(min) + "; stdev: " + str(stdev))
 
-        #Populate the 2019 dictionary wityh the summary values
-        dict_2019[names] = total
+        #Populate the 2019 dictionary with the summary values
+        dict_2019_total[names] = total
+        dict_2019_max[names] = max
+        dict_2019_min[names] = min
+        dict_2019_std[names] = stdev
 
-        #Populate the 2019 list with the summary values
+#delete the dictionary initialising values as they are of no value now
+del dict_2019_total["names"]
+del dict_2019_max["names"]
+del dict_2019_min["names"]
+del dict_2019_std["names"]
+#print(dict_2019_total)
+#print(dict_2019_max)
+#print(dict_2019_min)
+#print(dict_2019_std)
 
+##################### Repeating for 2020
 
+#Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
+np2020 = df2020_Merged.to_numpy()
+#print (df2020_Merged.columns)
+#print(np2020)
+#np2020
+np_2020_Total = np.sum(np2020[:,17])
+#print(np_2020_Total)
 
-#delete the dictionary initialising values as they are no value now
-#print(dict_2019)
-del dict_2019["names"]
-#print(dict_2019)
+# Creating a list of the crime types names
+ms_crimes = list(df2020_Merged)[2:] # List crime types
+#print(ms_crimes)
 
-#print(total)
-#print(max)
-#print(min)
-#print(stdev)
+#starting the counter with 2 as I do not want to get the sum of the first few columns
+counter = 2
 
-"""
+#Define the 2019 dictionary to hold the values fpr
+dict_2020_total = {"names":0}
+dict_2020_max = {"names":0}
+dict_2020_min = {"names":0}
+dict_2020_std = {"names":0}
+
+for names in ms_crimes :
+    if names != 'LSOA name' :
+        counter = counter + 1
+        #print(counter)
+        total = np.sum(np2020[:,counter])
+        max = np.max(np2020[:,counter])
+        min = np.min(np2020[:,counter])
+        stdev = np.std(np2020[:,counter])
+        #print("Crime Type: " + names + "; Total: " + str(total) + "; Max: " + str(max) + "; Min: " + str(min) + "; stdev: " + str(stdev))
+
+        #Populate the 2020 dictionary with the summary values
+        dict_2020_total[names] = total
+        dict_2020_max[names] = max
+        dict_2020_min[names] = min
+        dict_2020_std[names] = stdev
+
+#delete the dictionary initialising values as they are of no value now
+del dict_2020_total["names"]
+del dict_2020_max["names"]
+del dict_2020_min["names"]
+del dict_2020_std["names"]
+#print(dict_2020_total)
+#print(dict_2020_max)
+#print(dict_2020_min)
+#print(dict_2020_std)
+
+###########  VISUALIZE - SEABORN & MATPLOTLIB  ############################################################################################
+
 np2020 = df2020_Merged.to_numpy()
 #print(np2020)
 np_2020_Total = np.sum(np2020[:,17])
