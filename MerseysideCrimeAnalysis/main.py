@@ -488,7 +488,7 @@ df2019_Merged = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=Tru
 
 df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
 #print(df2020_Merged.head())
-print(df2020_Merged.columns)
+#print(df2020_Merged.columns)
 #print(df2020_Merged.isnull().sum())
 #print(df2020_Merged.shape) # 2729 records - 18 columns - no null value
 
@@ -501,12 +501,36 @@ print(df2020_Merged.columns)
 ###### PYTHON - FUNCTIONS - NUMPY #######################################################################################
 #Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
 np2019 = df2019_Merged.to_numpy()
+print (df2019_Merged.columns)
 #print(np2019)
 #np2019
 np_2019_Total = np.sum(np2019[:,17])
-print(np_2019_Total)
+#print(np_2019_Total)
 
+# Creating a list of the crime types names
+ms_crimes = list(df2020_Merged)[2:] # List crime types
+print(ms_crimes)
 
+#starting the counter with 2 as I do not want to get the sum of the first few columns
+counter = 2
+for names in ms_crimes :
+    if names == 'LSOA name' :
+        print('Ignore as we do not want to use this heading')
+    else :
+        counter = counter + 1
+        print(counter)
+        total = np.sum(np2019[:,counter])
+        max = np.max(np2019[:,counter])
+        min = np.min(np2019[:,counter])
+        stdev = np.std(np2019[:,counter])
+        print("Crime Type: " + names + "; Total: " + str(total) + "; Max: " + str(max) + "; Min: " + str(min) + "; stdev: " + str(stdev))
+
+print(total)
+print(max)
+print(min)
+print(stdev)
+
+"""
 np2020 = df2020_Merged.to_numpy()
 #print(np2020)
 np_2020_Total = np.sum(np2020[:,17])
@@ -515,7 +539,7 @@ print(np_2020_Total)
 # Creating a list of the crime types
 ms_crimes = list(df2020_Merged)[2:] # List crime types
 print(ms_crimes)
-
+"""
 """
 
 # For June 2019 - see how many different crime types there were
