@@ -501,7 +501,7 @@ df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=Tru
 ###### PYTHON - FUNCTIONS - NUMPY #######################################################################################
 #Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
 np2019 = df2019_Merged.to_numpy()
-print (df2019_Merged.columns)
+#print (df2019_Merged.columns)
 #print(np2019)
 #np2019
 np_2019_Total = np.sum(np2019[:,17])
@@ -509,26 +509,43 @@ np_2019_Total = np.sum(np2019[:,17])
 
 # Creating a list of the crime types names
 ms_crimes = list(df2020_Merged)[2:] # List crime types
-print(ms_crimes)
+#print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
 counter = 2
+
+#Define the 2019 dictionary to hold the values fpr
+dict_2019 = {"names":0}
+
+#Define the 2019 list to hold the values fpr
+list_2019 = []
+
 for names in ms_crimes :
-    if names == 'LSOA name' :
-        print('Ignore as we do not want to use this heading')
-    else :
+    if names != 'LSOA name' :
         counter = counter + 1
-        print(counter)
+        #print(counter)
         total = np.sum(np2019[:,counter])
         max = np.max(np2019[:,counter])
         min = np.min(np2019[:,counter])
         stdev = np.std(np2019[:,counter])
-        print("Crime Type: " + names + "; Total: " + str(total) + "; Max: " + str(max) + "; Min: " + str(min) + "; stdev: " + str(stdev))
+        #print("Crime Type: " + names + "; Total: " + str(total) + "; Max: " + str(max) + "; Min: " + str(min) + "; stdev: " + str(stdev))
 
-print(total)
-print(max)
-print(min)
-print(stdev)
+        #Populate the 2019 dictionary wityh the summary values
+        dict_2019[names] = total
+
+        #Populate the 2019 list with the summary values
+
+
+
+#delete the dictionary initialising values as they are no value now
+#print(dict_2019)
+del dict_2019["names"]
+#print(dict_2019)
+
+#print(total)
+#print(max)
+#print(min)
+#print(stdev)
 
 """
 np2020 = df2020_Merged.to_numpy()
