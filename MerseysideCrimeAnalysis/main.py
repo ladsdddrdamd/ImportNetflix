@@ -495,15 +495,15 @@ list_month_20.append(tc)
 #print(df1906_sorted.groupby('LSOA code')['Crime type'].value_counts())
 #print(dfcount1906.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
 #print(df1907_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount1907.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(dfcount1907.head(10)) # compare with dfcount1907.head() function looking at the total column for an overall count
 #print(df1908_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount1908.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(dfcount1908.head(10)) # compare with dfcount1908.head() function looking at the total column for an overall count
 #print(df2006_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount2006.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(dfcount2006.head(10)) # compare with dfcount2006.head() function looking at the total column for an overall count
 #print(df2007_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount1907.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(dfcount1907.head(10)) # compare with dfcount2007.head() function looking at the total column for an overall count
 #print(df2008_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount2008.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(dfcount2008.head(10)) # compare with dfcount1908.head() function looking at the total column for an overall count
 #Since they match; this means the data has been created successfully
 
 ########################### Join the Datasets together to craete a single dataset ###################   Merge dataframes  ####################################
@@ -545,7 +545,7 @@ np_2019_Total = np.sum(np2019[:,17])
 #print(np_2019_Total)
 
 # Creating a list of the crime types names
-ms_crimes = list(df2019_Merged)[2:] # List crime types
+ms_crimes_2019 = list(df2019_Merged)[2:] # List crime types
 #print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
@@ -557,7 +557,7 @@ dict_2019_max = {"names":0}
 dict_2019_min = {"names":0}
 dict_2019_std = {"names":0}
 
-for names in ms_crimes :
+for names in ms_crimes_2019 :
     if names != 'LSOA name' :
         counter = counter + 1
         #print(counter)
@@ -594,7 +594,7 @@ np_2020_Total = np.sum(np2020[:,17])
 #print(np_2020_Total)
 
 # Creating a list of the crime types names
-ms_crimes = list(df2020_Merged)[2:] # List crime types
+ms_crimes_2020 = list(df2020_Merged)[2:] # List crime types
 #print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
@@ -606,7 +606,7 @@ dict_2020_max = {"names":0}
 dict_2020_min = {"names":0}
 dict_2020_std = {"names":0}
 
-for names in ms_crimes :
+for names in ms_crimes_2020 :
     if names != 'LSOA name' :
         counter = counter + 1
         #print(counter)
@@ -636,29 +636,41 @@ del dict_2020_std["names"]
 
 list_month_names = ['06-2019','07-2019','08-2019','06-2020','07-2020','08-2020']
 
-######## Line graph #########################
+######## Line graph - Summer 2019 vs Summer 2020 #########################
+"""
 list_month_names = ['06-June','07-July','08-Aug']
 fig, ax = plt.subplots()
-ax.plot(list_month_names,list_month_19, marker="o", linestyle='dotted', color="r")
-ax.plot(list_month_names,list_month_20, marker="v", linestyle="--", color="b")
+ax.plot(list_month_names,list_month_19, marker="o", linestyle='dotted', color="r",label='2019')
+ax.plot(list_month_names,list_month_20, marker="v", linestyle="--", color="b",label='2020')
+plt.legend()
 ax.set_xlabel("Time (months)")
 ax.set_ylabel("Number of Recorded Crimes")
 ax.set_title("Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020")
 plt.show()
-
-
-
-
-#print(list_Month)
-#print(list_month_names)
-
-
-
 """
-# print(df2019_Merged.columns)
-# print(df2019_Merged["Month"])
-print(dfcount2006.columns)
-# print(dfcount1907["Month"])
-print(dict_total_by_Month)
-dftest = pd.DataFrame((dict_total_by_Month), columns=['Month','Total'])
-"""
+
+######## Bar graph - Crime by Area 2019 & 2020 #########################
+#crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
+crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+
+LSOA = df1908_sorted["Crime type"].unique()
+fig, ax = plt.subplots()
+for LSOA in ms_crimes_2019:
+    if (LSOA not in ["Total", "LSOA name"]) :
+        ax.bar(LSOA, df2020_Merged[LSOA].sum())
+        #print(df2019_Merged[LSOA].sum())
+ax.set_ylabel("Total Crime Numbers")
+ax.set_xticklabels(crime_no)
+plt.title ("Crimes By Type - Summer 2019")
+plt.show()
+
+fig, ax = plt.subplots()
+for LSOA in ms_crimes_2020:
+    if (LSOA not in ["Total", "LSOA name"]) :
+        ax.bar(LSOA, df2020_Merged[LSOA].sum())
+        #print(df2020_Merged[LSOA].sum())
+ax.set_ylabel("Total Crime Numbers")
+ax.set_xticklabels(crime_no)
+plt.title ("Crimes By Type - Summer 2020")
+plt.show()
+
