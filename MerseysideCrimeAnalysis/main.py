@@ -6,6 +6,7 @@
 # Setting up the project by importing packages for the basic python operations
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 ############### IMPORTING DATA ############################################################################################################
@@ -651,8 +652,8 @@ plt.show()
 
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
 #crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
+"""
 crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
-
 LSOA = df1908_sorted["Crime type"].unique()
 fig, ax = plt.subplots()
 for LSOA in ms_crimes_2019:
@@ -672,5 +673,90 @@ for LSOA in ms_crimes_2020:
 ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
 plt.title ("Crimes By Type - Summer 2020")
+plt.show()
+
+
+######## SEABORN Bar graph - Crime by Area 2019 & 2020 #########################
+df2019_Merged_whole = pd.concat([df1906_sorted,df1907_sorted,df1908_sorted],ignore_index=True)
+ms2019_Crime = df2019_Merged_whole['Crime type']
+sns.countplot(x=ms2019_Crime)
+plt.show()
+#print (ms2019_Crime)
+
+df2020_Merged_whole = pd.concat([df2006_sorted,df2007_sorted,df2008_sorted],ignore_index=True)
+ms2020_Crime = df2020_Merged_whole['Crime type']
+sns.countplot(x=ms2020_Crime)
+plt.show()
+#print (ms2020_Crime)
+
+"""
+
+#print(df2019_Merged)
+#craete an unstacked table with LSOA totals unstacked - fillimh any NaN values with zeros since no crime occurred
+#Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
+#sns.heatmap(Crime_LSOA)
+#plt.show()
+#print(Crime_LSOA)
+
+df2019_LSOA = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=True)
+df2020_LSOA = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
+
+"""
+df2019_LSOA.drop('Month',axis=1,inplace=True)
+#df2019_LSOA.drop('LSOA name',axis=1,inplace=True)
+#df2019_LSOA.drop('LSOA code',axis=1,inplace=True)
+df2019_LSOA.drop('Anti-social behaviour',axis=1,inplace=True)
+df2019_LSOA.drop('Bicycle theft',axis=1,inplace=True)
+df2019_LSOA.drop('Criminal damage and arson',axis=1,inplace=True)
+df2019_LSOA.drop('Drugs',axis=1,inplace=True)
+df2019_LSOA.drop('Other crime',axis=1,inplace=True)
+df2019_LSOA.drop('Other theft',axis=1,inplace=True)
+df2019_LSOA.drop('Possession of weapons',axis=1,inplace=True)
+df2019_LSOA.drop('Public order',axis=1,inplace=True)
+df2019_LSOA.drop('Robbery',axis=1,inplace=True)
+df2019_LSOA.drop('Shoplifting',axis=1,inplace=True)
+df2019_LSOA.drop('Theft from the person',axis=1,inplace=True)
+df2019_LSOA.drop('Vehicle crime',axis=1,inplace=True)
+df2019_LSOA.drop('Violence and sexual offences',axis=1,inplace=True)
+df2019_LSOA.drop('Burglary',axis=1,inplace=True)
+#print(df2019_LSOA)
+"""
+
+######## SEABORN Relationial Data - Crime by Area 2019 & 2020 #########################
+#sns.distplot(df2019_LSOA.Total)
+#sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
+#plt.show()
+
+#sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20)
+#plt.show()
+
+#sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20, stat='density')
+#plt.show()
+
+#sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
+#plt.show()
+
+#pie chart
+
+#df2019_LSOA.rename(columns={'LSOA name':'name'})
+
+#pandas.DataFrame.rename(columns={'old_column_name':'new_column_name'})
+
+#print(df2019_LSOA)
+
+#plt.style.use("fivethirtyeight")
+#plt.pie(df2019_LSOA.Total,labels=df2019_LSOA.name)
+#plt.title = ("my Pie Chart")
+#plt.tight_layout()
+#plt.show()
+
+#========examine the top 25 LSOA in each year by total crime
+
+
+dfTop25_2019 = df2019_LSOA.sort_values('Total',ascending=False)
+dfTop25_2019 = dfTop25_2019.drop_duplicates(['LSOA code'],keep='first')
+dfTop25_2019 = dfTop25_2019.head(25)
+dfTop25_2019.drop(dfTop25_2019.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
+sns.countplot(x='LSOA name', data=dfTop25_2019)
 plt.show()
 
