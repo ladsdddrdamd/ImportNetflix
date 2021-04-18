@@ -126,6 +126,14 @@ df2007_sorted = df2007.sort_values(by=['LSOA code','Crime type'],ascending=True)
 df2008_sorted = df2008.sort_values(by=['LSOA code','Crime type'],ascending=True)
 #ValidateDataFrameDetails(df2008_sorted)  #commented out as I validated the structure is correct - dataframe created correctly & sorted correctly
 
+###### ANALYZING DATA - ADDING THE THREE DATAFRAMES TOGETHER TO CREATE A SINGLE 2019 VIEW OF THE ORIGIONAL DATA - using the sorted data frame as the basis
+df2019_Merged_Origional = pd.concat([df1906_sorted,df1907_sorted,df1908_sorted],ignore_index=True)
+#ValidateDataFrameDetails(df2019_Merged_Origional) #totals match - number of individual crime Types is 42,236; maup up of 13,297 (June), 14,534 (July) & 14,405(August)
+
+df2020_Merged_Origional = pd.concat([df2006_sorted,df2007_sorted,df2008_sorted],ignore_index=True)
+#ValidateDataFrameDetails(df2020_Merged_Origional) #totals match - number of individual crime Types is 45,243; maup up of 14,684 (June), 14,980 (July) & 15,579(August)
+
+
 ###### ANALYZING DATA - DROPPING DUPLICATED VALUES THROUGH CHANGING THE TABLE ORIENTATATION
 # This will allow me to count the instances of crimes accross the LSOA areas
 
@@ -375,7 +383,7 @@ print(dict_2019_std)
 
 ##################### Repeating for 2020
 
-#Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
+#Create  code to carry out mathemitical operations over collections quickly using Numpy
 np2020 = df2020_Merged.to_numpy()
 np_2020_Total = np.sum(np2020[:,17])
 
@@ -425,6 +433,7 @@ plt.style.use('seaborn-white')
 
 list_month_names = ['06-2019','07-2019','08-2019','06-2020','07-2020','08-2020']
 
+""" *** Start
 ######## Line graph - Summer 2019 vs Summer 2020 #########################
 list_month_names = ['06-June','07-July','08-Aug']
 fig, ax = plt.subplots()
@@ -436,6 +445,7 @@ ax.set_ylabel("Number of Recorded Crimes")
 ax.set_title("Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020")
 plt.show()
 
+end ***** """
 
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
 #crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
@@ -449,7 +459,7 @@ for LSOA in ms_crimes_2019:
 ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
 plt.title ("Crimes By Type - Summer 2019")
-plt.show()
+#plt.show()
 
 fig, ax = plt.subplots()
 for LSOA in ms_crimes_2020:
@@ -459,7 +469,7 @@ for LSOA in ms_crimes_2020:
 ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
 plt.title ("Crimes By Type - Summer 2020")
-plt.show()
+#plt.show()
 
 
 ######## SEABORN Bar graph - Crime by Area 2019 & 2020 #########################
@@ -473,36 +483,25 @@ ms2020_Crime = df2020_Merged_whole['Crime type']
 sns.countplot(x=ms2020_Crime)
 plt.show()
 
-#craete an unstacked table with LSOA totals unstacked - fillimh any NaN values with zeros since no crime occurred
+#craete an unstacked table with LSOA the totals- fillimh any NaN values with zeros since no crime occurred
 Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
 sns.heatmap(Crime_LSOA)
 plt.show()
 
+######## SEABORN Relationial Data - Crime by Area 2019 & 2020 #########################
+
+###### Joining the count of LSOA into the one table for comparison purposes for both 2019 & 2020
 df2019_LSOA = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=True)
 df2020_LSOA = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
+#ValidateDataFrameDetails(df2019_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
+#ValidateDataFrameDetails(df2020_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
 
-"""
-df2019_LSOA.drop('Month',axis=1,inplace=True)
-#df2019_LSOA.drop('LSOA name',axis=1,inplace=True)
-#df2019_LSOA.drop('LSOA code',axis=1,inplace=True)
-df2019_LSOA.drop('Anti-social behaviour',axis=1,inplace=True)
-df2019_LSOA.drop('Bicycle theft',axis=1,inplace=True)
-df2019_LSOA.drop('Criminal damage and arson',axis=1,inplace=True)
-df2019_LSOA.drop('Drugs',axis=1,inplace=True)
-df2019_LSOA.drop('Other crime',axis=1,inplace=True)
-df2019_LSOA.drop('Other theft',axis=1,inplace=True)
-df2019_LSOA.drop('Possession of weapons',axis=1,inplace=True)
-df2019_LSOA.drop('Public order',axis=1,inplace=True)
-df2019_LSOA.drop('Robbery',axis=1,inplace=True)
-df2019_LSOA.drop('Shoplifting',axis=1,inplace=True)
-df2019_LSOA.drop('Theft from the person',axis=1,inplace=True)
-df2019_LSOA.drop('Vehicle crime',axis=1,inplace=True)
-df2019_LSOA.drop('Violence and sexual offences',axis=1,inplace=True)
-df2019_LSOA.drop('Burglary',axis=1,inplace=True)
-#print(df2019_LSOA)
-"""
+#dropping the following columns'Month', 'LSOA name', 'Anti-social behaviour','Bicycle theft', 'Burglary', 'Criminal damage and arson', 'Drugs','Other crime', 'Other theft', 'Possession of weapons', 'Public order','Robbery', 'Shoplifting', 'Theft from the person', 'Vehicle crime','Violence and sexual offences',
+df2019_LSOA.drop(df2019_LSOA.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
+df2020_LSOA.drop(df2020_LSOA.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
+#ValidateDataFrameDetails(df2019_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
+#ValidateDataFrameDetails(df2020_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
 
-######## SEABORN Relationial Data - Crime by Area 2019 & 2020 #########################
 sns.distplot(df2019_LSOA.Total)
 sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
 plt.show()
@@ -516,31 +515,58 @@ plt.show()
 sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
 plt.show()
 
-#========examine the top 25 LSOA in each year by total crime
-dfTop25_2019 = df2019_LSOA.sort_values('Total',ascending=False)
-dfTop25_2019 = dfTop25_2019.drop_duplicates(['LSOA code'],keep='first')
-dfTop25_2019 = dfTop25_2019.head(25)
-dfTop25_2019.drop(dfTop25_2019.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
-sns.countplot(x='LSOA name', data=dfTop25_2019)
-plt.show()
 
-
-"""
-
-font1 = {'family': 'Franklin Gothic Medium ',
-        'color':  'darkblue',
-        'weight': 'bold',
-        'size': 35,
-        }
-
-lables=df['major_category'].unique()
-
-sizes=df.groupby(['major_category']).size()
-colors=['darkturquoise','lightskyblue','teal','turquoise', 'deepskyblue','steelblue','lightsteelblue','cornflowerblue','paleturquoise']
+###### Percentage of crimes in each catogery -2019 & 2020
+font1 = {'family': 'Franklin Gothic Medium ','color':  'darkblue','weight': 'bold','size': 35,}
+lables = df2019_Merged_Origional['Crime type'].unique()
+lables.sort()
+sizes = df2019_Merged_Origional.groupby(['Crime type']).size()
 plt.figure(figsize=(20,10))
 ax = plt.axes()
 ax.set_facecolor("lightblue")
-plt.title('Percentage of crimes in each catogery\n',fontdict=font1)
-ab=plt.pie(sizes, labels=lables, colors=colors, startangle=90,autopct='%1.1f%%', textprops={'fontsize': 14,'color':'darkblue'})
+plt.title('Percentage of Crimes in each Catogery - Summer 2019\n',fontdict=font1)
+ab=plt.pie(sizes, labels=lables, startangle=90,autopct='%1.1f%%', textprops={'fontsize': 8,'color':'darkblue'})
 plt.show()
-"""
+
+###### 2020 - Pie Chart
+lables = df2020_Merged_Origional['Crime type'].unique()
+lables.sort()
+sizes = df2020_Merged_Origional.groupby(['Crime type']).size()
+plt.figure(figsize=(20,10))
+ax = plt.axes()
+ax.set_facecolor("lightblue")
+plt.title('Percentage of Crimes in each Catogery - Summer 2020\n',fontdict=font1)
+ab=plt.pie(sizes, labels=lables, startangle=90,autopct='%1.1f%%', textprops={'fontsize': 8,'color':'darkblue'})
+plt.show()
+
+#========examine the top 25 LSOA by month in each year by total crime
+dfTop25_2019 = df2019_LSOA.sort_values('Total',ascending=False)
+dfTop25_2019 = dfTop25_2019.drop_duplicates(['LSOA name'],keep='first')
+dfTop25_2019 = dfTop25_2019.head(25)
+
+dfTop25_2020 = df2020_LSOA.sort_values('Total',ascending=False)
+dfTop25_2020 = dfTop25_2020.drop_duplicates(['LSOA name'],keep='first')
+dfTop25_2020 = dfTop25_2020.head(25)
+
+#Join the tables to see the top LSOA for summer 2019 & 2020 - doing an inner join to only take the information where it is in both tables
+#dftop_LSAO_Merged = pd.merge(left=dfTop25_2019, right=dfTop25_2020, left_on='LSOA name', left_index='_2019', right_on='LSOA name', right_index='_2020')
+#dfTop25_2019.merge(dfTop25_2020[['LSOA name','Total']],on='LSOA name')
+dfTopLSAO_Merged = dfTop25_2019.merge(dfTop25_2020,on='LSOA name',suffixes=["_2019","_2020"])
+#ValidateDataFrameDetails(dfTopLSAO_Merged)
+
+
+
+plt.figure(1,figsize=(14,4))
+for i in range(1,3) :
+    plt.subplot(1,2,i)
+    plt.boxplot(dfTopLSAO_Merged[dfTopLSAO_Merged.columns[i]])
+    plt.title(dfTopLSAO_Merged.columns[i])
+plt.show()
+
+dfTopLSAO_Merged.plot.bar(x='LSOA name',rot=45,title="Top LSOA by Crime Numbers - Merseyside")
+plt.show()
+
+
+#dfTop25_2019.drop(dfTop25_2019.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
+#sns.countplot(x='LSOA name', data=dfTop25_2019)
+#plt.show()
