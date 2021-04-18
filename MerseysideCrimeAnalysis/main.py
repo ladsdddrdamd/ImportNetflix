@@ -434,6 +434,7 @@ plt.style.use('seaborn-white')
 list_month_names = ['06-2019','07-2019','08-2019','06-2020','07-2020','08-2020']
 
 """ *** Start
+Figure 1:
 ######## Line graph - Summer 2019 vs Summer 2020 #########################
 list_month_names = ['06-June','07-July','08-Aug']
 fig, ax = plt.subplots()
@@ -447,46 +448,80 @@ plt.show()
 
 end ***** """
 
+""" *** Start
+Figure 2 & 3
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
-#crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
-crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+crime_no = ['Anti-social behaviour','Bicycle theft','Burglary','Criminal damage and arson','Drugs','Other crime','Other theft','Possession of weapons','Public Order','Robbery','Shoplifting', 'Theft from the person','Vehicle crime','Violence and sexual offences']
+#crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 LSOA = df1908_sorted["Crime type"].unique()
 fig, ax = plt.subplots()
 for LSOA in ms_crimes_2019:
     if (LSOA not in ["Total", "LSOA name"]) :
         ax.bar(LSOA, df2020_Merged[LSOA].sum())
-        #print(df2019_Merged[LSOA].sum())
 ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
+plt.xticks(rotation=45)
 plt.title ("Crimes By Type - Summer 2019")
-#plt.show()
+plt.show()
+
 
 fig, ax = plt.subplots()
 for LSOA in ms_crimes_2020:
     if (LSOA not in ["Total", "LSOA name"]) :
         ax.bar(LSOA, df2020_Merged[LSOA].sum())
-        #print(df2020_Merged[LSOA].sum())
 ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
+plt.xticks(rotation=45)
 plt.title ("Crimes By Type - Summer 2020")
-#plt.show()
+plt.show()
+end ***** """
 
-
+""" *** Start
+Figure 4 & 5
 ######## SEABORN Bar graph - Crime by Area 2019 & 2020 #########################
 df2019_Merged_whole = pd.concat([df1906_sorted,df1907_sorted,df1908_sorted],ignore_index=True)
 ms2019_Crime = df2019_Merged_whole['Crime type']
-sns.countplot(x=ms2019_Crime)
+ms2019_Crime = ms2019_Crime.sort_values()
+barchart = sns.countplot(x=ms2019_Crime)
+barchart.set_xticklabels(barchart.get_xticklabels(),rotation=45)
+plt.title('Crimes By Type - Summer 2019')
+plt.xlabel("List of Offenses")
+plt.ylabel("Number of Offenses")
+plt.grid()
+plt.tight_layout()
 plt.show()
 
 df2020_Merged_whole = pd.concat([df2006_sorted,df2007_sorted,df2008_sorted],ignore_index=True)
 ms2020_Crime = df2020_Merged_whole['Crime type']
-sns.countplot(x=ms2020_Crime)
+ms2020_Crime = ms2020_Crime.sort_values()
+barchart = sns.countplot(x=ms2020_Crime)
+barchart.set_xticklabels(barchart.get_xticklabels(),rotation=45)
+plt.title('Crimes By Type - Summer 2020')
+plt.xlabel("List of Offenses")
+plt.ylabel("Number of Offenses")
+plt.grid()
+plt.tight_layout()
 plt.show()
+end ***** """
 
+""" *** Start
+Figure 6 & 7
+###### Heatmap showing the crimes per region - most on the left and together with a number of outliers to the right
 #craete an unstacked table with LSOA the totals- fillimh any NaN values with zeros since no crime occurred
 Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
 sns.heatmap(Crime_LSOA)
+plt.title('Heatmap - Crime per Location - Summer 2019')
+plt.grid()
+plt.tight_layout()
 plt.show()
+
+Crime_LSOA = df2020_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
+sns.heatmap(Crime_LSOA)
+plt.title('Heatmap - Crime per Location - Summer 2020')
+plt.grid()
+plt.tight_layout()
+plt.show()
+end ***** """
 
 ######## SEABORN Relationial Data - Crime by Area 2019 & 2020 #########################
 
@@ -502,15 +537,13 @@ df2020_LSOA.drop(df2020_LSOA.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],a
 #ValidateDataFrameDetails(df2019_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
 #ValidateDataFrameDetails(df2020_LSOA)  #commented out as I validated the structure is correct - dataframe created correctly
 
-sns.distplot(df2019_LSOA.Total)
-sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
-plt.show()
+#commenting out of the use of `distplot` as it is a deprecated function and will be removed in a future version.
+#sns.distplot(df2019_LSOA.Total)
+#sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
+#plt.show()
 
-sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20)
-plt.show()
-
-sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20, stat='density')
-plt.show()
+#sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20, stat='density')
+#plt.show()
 
 sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
 plt.show()
