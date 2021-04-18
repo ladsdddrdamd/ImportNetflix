@@ -523,3 +523,24 @@ dfTop25_2019 = dfTop25_2019.head(25)
 dfTop25_2019.drop(dfTop25_2019.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],axis=1,inplace=True)
 sns.countplot(x='LSOA name', data=dfTop25_2019)
 plt.show()
+
+
+"""
+
+font1 = {'family': 'Franklin Gothic Medium ',
+        'color':  'darkblue',
+        'weight': 'bold',
+        'size': 35,
+        }
+
+lables=df['major_category'].unique()
+
+sizes=df.groupby(['major_category']).size()
+colors=['darkturquoise','lightskyblue','teal','turquoise', 'deepskyblue','steelblue','lightsteelblue','cornflowerblue','paleturquoise']
+plt.figure(figsize=(20,10))
+ax = plt.axes()
+ax.set_facecolor("lightblue")
+plt.title('Percentage of crimes in each catogery\n',fontdict=font1)
+ab=plt.pie(sizes, labels=lables, colors=colors, startangle=90,autopct='%1.1f%%', textprops={'fontsize': 14,'color':'darkblue'})
+plt.show()
+"""
