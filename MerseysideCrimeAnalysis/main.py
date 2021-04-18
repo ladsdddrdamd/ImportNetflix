@@ -566,6 +566,8 @@ plt.tight_layout()
 plt.show()
 
 ###### Percentage of crimes in each catogery -2019 & 2020
+
+###### Figure 11 -  Piechart - Percentage of Crimesin each category - Summer 2019
 font1 = {'family': 'DejaVu Sans','color':  'darkblue','weight': 'bold','size': 35,}
 lables = df2019_Merged_Origional['Crime type'].unique()
 lables.sort()
@@ -579,6 +581,8 @@ plt.tight_layout()
 plt.show()
 
 ###### 2020 - Pie Chart
+
+###### Figure 11 -  Piechart - Percentage of Crimesin each category - Summer 2019
 lables = df2020_Merged_Origional['Crime type'].unique()
 lables.sort()
 sizes = df2020_Merged_Origional.groupby(['Crime type']).size()
@@ -617,6 +621,8 @@ for i in range(1,3) :
 plt.show()
 
 #create a barchart showing the top LSOA for crime in 2019 vss 2020
+
+###### Figure 13 -  BarChart Top LSOA for Crime in Merseyside
 dfTopLSAO_Merged.plot.bar(x='LSOA name',rot=45,title="Top LSOA Areas by Crime Numbers - Merseyside")
 plt.xlabel("LSOA Area")
 plt.ylabel("Count Of Offenses")
