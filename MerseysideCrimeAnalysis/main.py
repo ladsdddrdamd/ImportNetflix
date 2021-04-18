@@ -366,6 +366,13 @@ del dict_2019_max["names"]
 del dict_2019_min["names"]
 del dict_2019_std["names"]
 
+#unfortunately, this analysis did not provide useable data to variation between the max and min values was too great to be useable
+print("Dictionary - Max, Min & standard Dev for 2019 Crime Types")
+print(dict_2019_total)
+print(dict_2019_max)
+print(dict_2019_min)
+print(dict_2019_std)
+
 ##################### Repeating for 2020
 
 #Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
@@ -405,6 +412,13 @@ del dict_2020_max["names"]
 del dict_2020_min["names"]
 del dict_2020_std["names"]
 
+#unfortunately, this analysis did not provide useable data to variation between the max and min values was too great to be useable
+print("Dictionary - Max, Min & standard Dev for 2020 Crime Types")
+print(dict_2020_total)
+print(dict_2020_max)
+print(dict_2020_min)
+print(dict_2020_std)
+
 ###########  VISUALIZE - SEABORN & MATPLOTLIB  ############################################################################################
 #%matplotlib notebook
 plt.style.use('seaborn-white')
@@ -422,9 +436,9 @@ ax.set_ylabel("Number of Recorded Crimes")
 ax.set_title("Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020")
 plt.show()
 
+
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
 #crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
-"""
 crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 LSOA = df1908_sorted["Crime type"].unique()
 fig, ax = plt.subplots()
@@ -453,22 +467,16 @@ df2019_Merged_whole = pd.concat([df1906_sorted,df1907_sorted,df1908_sorted],igno
 ms2019_Crime = df2019_Merged_whole['Crime type']
 sns.countplot(x=ms2019_Crime)
 plt.show()
-#print (ms2019_Crime)
 
 df2020_Merged_whole = pd.concat([df2006_sorted,df2007_sorted,df2008_sorted],ignore_index=True)
 ms2020_Crime = df2020_Merged_whole['Crime type']
 sns.countplot(x=ms2020_Crime)
 plt.show()
-#print (ms2020_Crime)
 
-"""
-
-#print(df2019_Merged)
 #craete an unstacked table with LSOA totals unstacked - fillimh any NaN values with zeros since no crime occurred
-#Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
-#sns.heatmap(Crime_LSOA)
-#plt.show()
-#print(Crime_LSOA)
+Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
+sns.heatmap(Crime_LSOA)
+plt.show()
 
 df2019_LSOA = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=True)
 df2020_LSOA = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
@@ -495,36 +503,20 @@ df2019_LSOA.drop('Burglary',axis=1,inplace=True)
 """
 
 ######## SEABORN Relationial Data - Crime by Area 2019 & 2020 #########################
-#sns.distplot(df2019_LSOA.Total)
-#sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
-#plt.show()
+sns.distplot(df2019_LSOA.Total)
+sns.distplot(df2019_LSOA.Total, rug=True, hist=True,kde=True)
+plt.show()
 
-#sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20)
-#plt.show()
+sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20)
+plt.show()
 
-#sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20, stat='density')
-#plt.show()
+sns.histplot(df2019_LSOA.Total,kde=True, bins=300,binwidth=20, stat='density')
+plt.show()
 
-#sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
-#plt.show()
-
-#pie chart
-
-#df2019_LSOA.rename(columns={'LSOA name':'name'})
-
-#pandas.DataFrame.rename(columns={'old_column_name':'new_column_name'})
-
-#print(df2019_LSOA)
-
-#plt.style.use("fivethirtyeight")
-#plt.pie(df2019_LSOA.Total,labels=df2019_LSOA.name)
-#plt.title = ("my Pie Chart")
-#plt.tight_layout()
-#plt.show()
+sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
+plt.show()
 
 #========examine the top 25 LSOA in each year by total crime
-
-
 dfTop25_2019 = df2019_LSOA.sort_values('Total',ascending=False)
 dfTop25_2019 = dfTop25_2019.drop_duplicates(['LSOA code'],keep='first')
 dfTop25_2019 = dfTop25_2019.head(25)
