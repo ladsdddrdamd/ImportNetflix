@@ -431,23 +431,22 @@ print(dict_2020_std)
 #%matplotlib notebook
 plt.style.use('seaborn-white')
 
-list_month_names = ['06-2019','07-2019','08-2019','06-2020','07-2020','08-2020']
-
 ######## Line graph - Summer 2019 vs Summer 2020 #########################
+###### Figure 1: Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020
 #create a line graph to show the total of crimes in June, July & Aug 2019 vs the same period in 2020
 list_month_names = ['06-June','07-July','08-Aug']
 fig, ax = plt.subplots()
 ax.plot(list_month_names,list_month_19, marker="o", linestyle='dotted', color="r",label='2019')
 ax.plot(list_month_names,list_month_20, marker="v", linestyle="--", color="b",label='2020')
 plt.legend()
-ax.set_xlabel("Time (months)")
+ax.set_xlabel("Time (Months)")
 ax.set_ylabel("Number of Recorded Crimes")
 ax.set_title("Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020")
 plt.show()
 
-
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
 #create a bar graph showing the crimes by area for 2019 & 2020 in Matplotlib
+###### Figure 2 -  Crimes by Type - Summer 2019
 crime_no = ['Anti-social behaviour','Bicycle theft','Burglary','Criminal damage and arson','Drugs','Other crime','Other theft','Possession of weapons','Public Order','Robbery','Shoplifting', 'Theft from the person','Vehicle crime','Violence and sexual offences']
 #crime_no = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 LSOA = df1908_sorted["Crime type"].unique()
@@ -459,9 +458,14 @@ ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
 plt.xticks(rotation=45)
 plt.title ("Crimes By Type - Summer 2019")
+plt.xlabel("List of Offenses")
+plt.ylabel("Number of Offenses")
+plt.grid()
+plt.tight_layout()
 plt.show()
 
 
+###### Figure 3 -  Crimes by Type - Summer 2020
 fig, ax = plt.subplots()
 for LSOA in ms_crimes_2020:
     if (LSOA not in ["Total", "LSOA name"]) :
@@ -470,10 +474,15 @@ ax.set_ylabel("Total Crime Numbers")
 ax.set_xticklabels(crime_no)
 plt.xticks(rotation=45)
 plt.title ("Crimes By Type - Summer 2020")
+plt.xlabel("List of Offenses")
+plt.ylabel("Number of Offenses")
+plt.grid()
+plt.tight_layout()
 plt.show()
 
 ######## SEABORN Bar graph - Crime by Area 2019 & 2020 #########################
 #create a bar graph showing the crimes by area for 2019 & 2020 in Seaborn
+###### Figure 4 -  Crimes by Type - Summer 2020 ~ although created these mirrored the outputs from MatplotLI & I preferred that version
 df2019_Merged_whole = pd.concat([df1906_sorted,df1907_sorted,df1908_sorted],ignore_index=True)
 ms2019_Crime = df2019_Merged_whole['Crime type']
 ms2019_Crime = ms2019_Crime.sort_values()
@@ -486,6 +495,7 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
+###### Figure 5 -  Crimes by Type - Summer 2020 ~ although created these mirrored the outputs from MatplotLI & I preferred that version
 df2020_Merged_whole = pd.concat([df2006_sorted,df2007_sorted,df2008_sorted],ignore_index=True)
 ms2020_Crime = df2020_Merged_whole['Crime type']
 ms2020_Crime = ms2020_Crime.sort_values()
@@ -500,6 +510,7 @@ plt.show()
 
 ###### Heatmap showing the crimes per region - most on the left and together with a number of outliers to the right
 #craete an unstacked table with LSOA the totals- fill in any NaN values with zeros since no crime occurred
+###### Figure 6 -  Heatmap by LSOA Location - Summer 2019 - Seaborne
 Crime_LSOA = df2019_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
 sns.heatmap(Crime_LSOA)
 plt.title('Heatmap - Crime per Location - Summer 2019')
@@ -507,7 +518,8 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
-Crime_LSOA = df2020_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
+###### Figure 7 -  Heatmap by LSOA Location - Summer 2019 - Seaborne
+# Crime_LSOA = df2020_Merged.groupby('LSOA code').Total.value_counts().unstack().fillna(0)
 sns.heatmap(Crime_LSOA)
 plt.title('Heatmap - Crime per Location - Summer 2020')
 plt.grid()
@@ -535,6 +547,7 @@ df2020_LSOA.drop(df2020_LSOA.columns[[0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16]],a
 #plt.show()
 
 #Estimate probability mass, and it can add a smooth curve obtained using a kernel density estimate,
+###### Figure 8 -  Histogram (Prpbability Mass) - Summer 2019 - Seaborne
 sns.histplot(df2019_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
 plt.title('Histogram (Probability Mass) - Crime per Location - Summer 2019')
 plt.xlabel("Count of Offenses")
@@ -543,6 +556,7 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
+###### Figure 9 -  Histogram (Prpbability Mass) - Summer 2020 - Seaborne
 sns.histplot(df2020_LSOA.Total,stat='probability', fill=False, element='step', cumulative=True)
 plt.title('Histogram (Probability Mass) - Crime per Location - Summer 2020')
 plt.xlabel("Count Of Offenses")
@@ -591,6 +605,7 @@ dfTop25_2020 = dfTop25_2020.head(25)
 dfTopLSAO_Merged = dfTop25_2019.merge(dfTop25_2020,on='LSOA name',suffixes=["_2019","_2020"])
 #ValidateDataFrameDetails(dfTopLSAO_Merged)
 
+###### Figure 10 -  Boxplot (Prpbability Mass) - Seaborne
 plt.figure(1,figsize=(14,4))
 for i in range(1,3) :
     plt.subplot(1,2,i)
