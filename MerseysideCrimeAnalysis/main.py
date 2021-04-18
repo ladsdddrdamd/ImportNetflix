@@ -154,10 +154,9 @@ dfcount2008 = pd.crosstab([df2008_sorted['Month'], df2008_sorted['LSOA code'],df
 dfcount2008.reset_index(inplace=True)
 #ValidateDataFrameDetails(dfcount2008)  #commented out as I validated the structure is correct - we now have a cross tab with the crime types as column headers
 
-###### GET THHE TOTAL COUNT THE INSTANCES OF CRIME TYPE BY LOSA REGION #######   LOOPING WITH ITERROWS#####################################
-
+###### GET THHE TOTAL COUNT THE INSTANCES OF CRIME TYPE BY LOSA REGION #######   LOOPING WITH ITERROWS #####################################
+#settimg an int variable to hold the total crimes for the file
 TotalCrime = 0
-#Crime = 0
 for val, row in dfcount1906.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -168,33 +167,24 @@ for val, row in dfcount1906.iterrows() :
     # creating a series on every itteration  for June 2019 & add a column called Total
     dfcount1906.loc[val, "Total"] = crime
 
-    # validate the variable is populating collectly for each LOSA & that there are no null values
-    #    print(crime)
+    # validate the variable is populating correctly for each LSOA & that there are no null values
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
-
-    # reset the variable for the next line
-    Crime = 0
 
 #create a dictionary to stored the value of total crime for Jun 2019
 dict_total_by_Month = {"06-2019":TotalCrime}
 
-#Create a list to hold the totals in by Month
+#Create a list to hold the totals in by Month - to be used in the Seaborn Visulations
 list_month =[]
 list_month_19 =[]
 list_month.append(TotalCrime)
 list_month_19.append(TotalCrime)
 
-#after the for loop exists - calidate the structure of the dataframe to ensure the new colums has been added
-#print(dfcount1906.head())
-#print(dfcount1906.shape)
-#print(dfcount1906.columns)
-#print(dfcount1906.isnull().sum())
+#validation of the figures
+#print ("June 2019 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount1906)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
 ################ July 2019
-
 TotalCrime = 0
-Crime = 0
 for val, row in dfcount1907.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -204,27 +194,19 @@ for val, row in dfcount1907.iterrows() :
 
     # creating a series on every itteration for July 2019 & add a column called Total
     dfcount1907.loc[val, "Total"] = crime
-    #    print(crime)
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
 
-    # reset the variable for the next line
-    Crime = 0
-
-#Append to dictionary the value of total crime for Jul 2020
+#Append to dictionary the value of total crime for Jul 2020 & append to the lists already created
 dict_total_by_Month["07-2019"] = TotalCrime
 list_month.append(TotalCrime)
 list_month_19.append(TotalCrime)
 
-#print(dfcount1907.head())
-#print(dfcount1907.shape)
-#print(dfcount1907.columns)
-#print(dfcount1907.isnull().sum())
+#validate that the totals are correct
+#print ("July 2019 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount1907)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
 ################ August 2019
-
 TotalCrime = 0
-Crime = 0
 for val, row in dfcount1908.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -234,28 +216,20 @@ for val, row in dfcount1908.iterrows() :
 
     # creating a series on every itteration for August 2019 & add a column called Total
     dfcount1908.loc[val, "Total"] = crime
-    #    print(crime)
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
 
-    # reset the variable for the next line
-    Crime = 0
-
-#Append to dictionary the value of total crime for Aug 2019
+#Append to dictionary the value of total crime for Aug 2019 & append to the list already created
 dict_total_by_Month["08-2019"] = TotalCrime
 list_month.append(TotalCrime)
 list_month_19.append(TotalCrime)
 
-#print(dfcount1908.head())
-#print(dfcount1908.shape)
-#print(dfcount1908.columns)
-#print(dfcount1908.isnull().sum())
+#print ("August 2019 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount1908)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
 ################ June 2020
-
+#created new list for 2020
 list_month_20 = []
 TotalCrime = 0
-Crime = 0
 for val, row in dfcount2006.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -265,27 +239,18 @@ for val, row in dfcount2006.iterrows() :
 
     # creating a series on every itteration for June 2020 & add a column called Total
     dfcount2006.loc[val, "Total"] = crime
-    #    print(crime)
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
-
-    # reset the variable for the next line
-    Crime = 0
 
 #Append to dictionary the value of total crime for Aug 2020
 dict_total_by_Month["06-2020"] = TotalCrime
 list_month.append(TotalCrime)
 list_month_20.append(TotalCrime)
 
-#print(dfcount2006.head())
-#print(dfcount2006.shape)
-#print(dfcount2006.columns)
-#print(dfcount2006.isnull().sum())
+#print ("June 2020 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount2006)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
 ################ July 2020
-
 TotalCrime = 0
-Crime = 0
 for val, row in dfcount2007.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -295,27 +260,18 @@ for val, row in dfcount2007.iterrows() :
 
     # creating a series on every itteration for July 2020 & add a column called Total
     dfcount2007.loc[val, "Total"] = crime
-    #    print(crime)
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
-
-    # reset the variable for the next line
-    Crime = 0
 
 #Append to dictionary the value of total crime for Jun 2020
 dict_total_by_Month["07-2020"] = TotalCrime
 list_month.append(TotalCrime)
 list_month_20.append(TotalCrime)
 
-#print(dfcount2007.head())
-#print(dfcount2007.shape)
-#print(dfcount2007.columns)
-#print(dfcount2007.isnull().sum())
+#print ("July 2020 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount2007)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
 ################ August 2020
-
 TotalCrime = 0
-Crime = 0
 for val, row in dfcount2008.iterrows() :
     #populating the crime int variable
     crime = row["Anti-social behaviour"] + row["Bicycle theft"] + row["Burglary"] + row["Criminal damage and arson"] + \
@@ -325,50 +281,38 @@ for val, row in dfcount2008.iterrows() :
 
     # creating a series on every itteration for August 2020 & add a column called Total
     dfcount2008.loc[val, "Total"] = crime
-    #    print(crime)
     TotalCrime = crime + TotalCrime
-    #    print(TotalCrime)
-
-    # reset the variable for the next line
-    Crime = 0
 
 #Append to dictionary the value of total crime for Aug 2020
 dict_total_by_Month["08-2020"] = TotalCrime
 list_month.append(TotalCrime)
 list_month_20.append(TotalCrime)
 
-#print(dfcount2008.head())
-#print(dfcount2008.shape)
-#print(dfcount2008.columns)
-#print(dfcount2008.isnull().sum())
+#print ("August 2020 - Total Crime " + str(TotalCrime))
+#ValidateDataFrameDetails(dfcount2008)  #commented out as I validated the structure is correct - total column correct by row (LSOA area) and overall count
 
-###### ANALYZE DATA - GROUPING TO GET UNIQUE COUNTS #######################################################################################
-# For the various datasets - see how many different crime types there were by LSOA - visually inspect result against counts from dfcount dataframe for each period
-#print(df1906_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount1906.head(10)) # compare with dfcount1906.head() function looking at the total column for an overall count
-#print(df1907_sorted.groupby('LSOA code')['Crime type'].value_counts())
+###### ANALYZE DATA - GROUPING TO GET UNIQUE COUNTS
+# For the various datasets - see how many different crime types there were by LSOA - visually inspect result against counts from dfcount dataframe for each period - tota;s should match bt LSOA
+#print(df1906_sorted.groupby('LSOA code')['Crime type'].value_counts()) # E01006264 is 1 on both lists
+#print(dfcount1906.head(25)) # compare with dfcount1906.head() function looking at the total column for an overall count
+#print(df1907_sorted.groupby('LSOA code')['Crime type'].value_counts()) # E01006412 is 3 on both lists
 #print(dfcount1907.head(10)) # compare with dfcount1907.head() function looking at the total column for an overall count
-#print(df1908_sorted.groupby('LSOA code')['Crime type'].value_counts())
+#print(df1908_sorted.groupby('LSOA code')['Crime type'].value_counts()) #E01006363 is 1 on both lists
 #print(dfcount1908.head(10)) # compare with dfcount1908.head() function looking at the total column for an overall count
-#print(df2006_sorted.groupby('LSOA code')['Crime type'].value_counts())
+#print(df2006_sorted.groupby('LSOA code')['Crime type'].value_counts()) #E01006225 is 1 on both lists
 #print(dfcount2006.head(10)) # compare with dfcount2006.head() function looking at the total column for an overall count
-#print(df2007_sorted.groupby('LSOA code')['Crime type'].value_counts())
-#print(dfcount1907.head(10)) # compare with dfcount2007.head() function looking at the total column for an overall count
-#print(df2008_sorted.groupby('LSOA code')['Crime type'].value_counts())
+#print(df2007_sorted.groupby('LSOA code')['Crime type'].value_counts()) #E01006412 is 15 on both lists
+#print(dfcount2007.head(10)) # compare with dfcount2007.head() function looking at the total column for an overall count
+#print(df2008_sorted.groupby('LSOA code')['Crime type'].value_counts()) #E01006412 is 13 on both lists
 #print(dfcount2008.head(10)) # compare with dfcount1908.head() function looking at the total column for an overall count
 #Since they match; this means the data has been created successfully
 
 ########################### Join the Datasets together to craete a single dataset ###################   Merge dataframes  ####################################
-
-#I want to create a new dataframe called merged totals 2019 - iwill use the concat method
+#I want to create a new dataframe called merged totals 2019 - i will use the concat method
 
 #merging the tables using concat - ignoring the index as it is of no use to me
 df2019_Merged = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=True)
-#print(df2019_Merged.head())
-#print(df2019_Merged.columns)
-#print(df2019_Merged.isnull().sum())
-#print(df2019_Merged.shape) # 2719 records - 18 columns - no null value
-
+#ValidateDataFrameDetails(df2019_Merged)  # 2719 records - 18 columns - no null value - but each LSPA is in ther 3 times - for June, July & August 2019
 #verify the record count by viewing the individuals dataframes - it is a count of districts reporting crime so no great variations expected
 #print(dfcount1906.shape) # 911 records - 18 columns - no null value
 #print(dfcount1907.shape) # 910 records - 18 columns - no null value
@@ -376,34 +320,26 @@ df2019_Merged = pd.concat([dfcount1906,dfcount1907,dfcount1908],ignore_index=Tru
 # success - they match the merge was successful - 2719 vs 2719
 
 df2020_Merged = pd.concat([dfcount2006,dfcount2007,dfcount2008],ignore_index=True)
-#print(df2020_Merged.head())
-#print(df2020_Merged.columns)
-#print(df2020_Merged.isnull().sum())
-#print(df2020_Merged.shape) # 2729 records - 18 columns - no null value
-
+#ValidateDataFrameDetails(df2020_Merged)  # 2729 records - 18 columns - no null value - but each LSPA is in ther 3 times - for June, July & August 2020
 #verify the record count by viewing the individuals dataframes - it is a count of districts reporting crime so no great variations expected
 #print(dfcount2006.shape) # 911 records - 18 columns - no null value
 #print(dfcount2007.shape) # 910 records - 18 columns - no null value
 #print(dfcount2008.shape) # 908 records - 18 columns - no null value
-# success - they match the merge was successful - 2719 vs 2719
+# success - they match the merge was successful - 2729 vs 2729
 
 ###### PYTHON - FUNCTIONS - NUMPY #######################################################################################
-#Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
+#Create code to carry out mathemitical operations over collections quickly using Numpy
 np2019 = df2019_Merged.to_numpy()
-#print (df2019_Merged.columns)
-#print(np2019)
-#np2019
 np_2019_Total = np.sum(np2019[:,17])
-#print(np_2019_Total)
 
 # Creating a list of the crime types names
 ms_crimes_2019 = list(df2019_Merged)[2:] # List crime types
-#print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
 counter = 2
 
-#Define the 2019 dictionary to hold the values fpr
+#Define the 2019 dictionary to hold the values fpr total, max, min, & Std;
+#I had what to create a dummy record ti initialise the dectionary as I was unable to create it within the for loop
 dict_2019_total = {"names":0}
 dict_2019_max = {"names":0}
 dict_2019_min = {"names":0}
@@ -412,7 +348,6 @@ dict_2019_std = {"names":0}
 for names in ms_crimes_2019 :
     if names != 'LSOA name' :
         counter = counter + 1
-        #print(counter)
         total = np.sum(np2019[:,counter])
         max = np.max(np2019[:,counter])
         min = np.min(np2019[:,counter])
@@ -425,34 +360,25 @@ for names in ms_crimes_2019 :
         dict_2019_min[names] = min
         dict_2019_std[names] = stdev
 
-#delete the dictionary initialising values as they are of no value now
+#delete the dictionary initialising values as they are of no value now since the disctionary was populated with vales from the for loop
 del dict_2019_total["names"]
 del dict_2019_max["names"]
 del dict_2019_min["names"]
 del dict_2019_std["names"]
-#print(dict_2019_total)
-#print(dict_2019_max)
-#print(dict_2019_min)
-#print(dict_2019_std)
 
 ##################### Repeating for 2020
 
 #Create reuseable code to carry out mathemitical operations over collections quickly using Numpy
 np2020 = df2020_Merged.to_numpy()
-#print (df2020_Merged.columns)
-#print(np2020)
-#np2020
 np_2020_Total = np.sum(np2020[:,17])
-#print(np_2020_Total)
 
 # Creating a list of the crime types names
 ms_crimes_2020 = list(df2020_Merged)[2:] # List crime types
-#print(ms_crimes)
 
 #starting the counter with 2 as I do not want to get the sum of the first few columns
 counter = 2
 
-#Define the 2019 dictionary to hold the values fpr
+#Define the 2020 dictionary to hold the values fpr
 dict_2020_total = {"names":0}
 dict_2020_max = {"names":0}
 dict_2020_min = {"names":0}
@@ -461,7 +387,6 @@ dict_2020_std = {"names":0}
 for names in ms_crimes_2020 :
     if names != 'LSOA name' :
         counter = counter + 1
-        #print(counter)
         total = np.sum(np2020[:,counter])
         max = np.max(np2020[:,counter])
         min = np.min(np2020[:,counter])
@@ -474,15 +399,11 @@ for names in ms_crimes_2020 :
         dict_2020_min[names] = min
         dict_2020_std[names] = stdev
 
-#delete the dictionary initialising values as they are of no value now
+#delete the dictionary initialising values as they are of no value now since the dictionary was populated with vales from the for loop
 del dict_2020_total["names"]
 del dict_2020_max["names"]
 del dict_2020_min["names"]
 del dict_2020_std["names"]
-#print(dict_2020_total)
-#print(dict_2020_max)
-#print(dict_2020_min)
-#print(dict_2020_std)
 
 ###########  VISUALIZE - SEABORN & MATPLOTLIB  ############################################################################################
 #%matplotlib notebook
@@ -491,7 +412,6 @@ plt.style.use('seaborn-white')
 list_month_names = ['06-2019','07-2019','08-2019','06-2020','07-2020','08-2020']
 
 ######## Line graph - Summer 2019 vs Summer 2020 #########################
-"""
 list_month_names = ['06-June','07-July','08-Aug']
 fig, ax = plt.subplots()
 ax.plot(list_month_names,list_month_19, marker="o", linestyle='dotted', color="r",label='2019')
@@ -501,7 +421,6 @@ ax.set_xlabel("Time (months)")
 ax.set_ylabel("Number of Recorded Crimes")
 ax.set_title("Recorded Crimes in Merseyside - Summer 2019 vs Summer 2020")
 plt.show()
-"""
 
 ######## Bar graph - Crime by Area 2019 & 2020 #########################
 #crime_no = ['Anti-Soc','Byc Tft','Burg','Damage','Drugs','Other','Theft','Weapons','Public Order','Robbery','Shop-Lift', 'Theft frpm person','Vehicle','Violence']
